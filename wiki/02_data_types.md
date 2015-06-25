@@ -21,7 +21,7 @@
 
 ## OSM地图数据table
 
-表格使用osmosis工具中的script文件夹中pgsimple_schema_0.6.sql生成, 共8张table.
+OSM地图数据table使用osmosis工具中的script文件夹中pgsimple_schema_0.6.sql生成, 共8张.
 
 ## 道路类型数据table
 

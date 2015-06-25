@@ -26,7 +26,7 @@ linux：ubuntu 14.10
 
 * 登陆数据库， `psql -U dbuser -d exampledb -h 127.0.0.1 -p 5432`
 
-参数意义： -U指定用户，-d指定数据库，-h指定服务器，-p指定端口。
+	参数意义： -U指定用户，-d指定数据库，-h指定服务器，-p指定端口。
 
 * 控制台命令：
 
@@ -93,14 +93,13 @@ pgadmin3只有v1.20.0支持postgresql 9.4 ，所以安装时注意pgadmin的版�
 
 4. 在安装wxGTK时,需要注意有两部分需要进行make和make install.
 
-4. 遇到的问题:
+5. 遇到的问题:
 
-	在编译完pgadmin3之后, 会生成/usr/local/pgadmin3目录,其中的bin为pgadmin3的启动程序. 而且,在/usr/local/lib目录下会生成相关的lib文件, 但在执行pgadmin3时,遇到了错误: 
-	./pgadmin3: error while loading shared libraries: libwx_gtk2u_stc-2.8.so.0: cannot open shared object file: No such file or directory.
+>在编译完pgadmin3之后, 会生成/usr/local/pgadmin3目录,其中的bin为pgadmin3的启动程序. 而且,在/usr/local/lib目录下会生成相关的lib文件, 但在执行pgadmin3时,遇到了错误: ./pgadmin3: error while loading shared libraries: libwx_gtk2u_stc-2.8.so.0: cannot open shared object file: No such file or directory.
 
-    在网上搜索得到答案,软件在运行时没有找到自己需要的动态运行库,也就是说虽然在/usr/local/lib中生成来相关lib, 但是系统却没办法找到该lib. 解决方法如下:
+	在网上搜索得到答案,软件在运行时没有找到自己需要的动态运行库,也就是说虽然在/usr/local/lib中生成来相关lib, 但是系统却没办法找到该lib. 解决方法如下:
 
-    运行时使用非标准位置/usr/lib和/lib下的库的方式有三种：
+	运行时使用非标准位置/usr/lib和/lib下的库的方式有三种：
 
     * 设置$LD_LIBRARY_PATH=库所在目录（多个目录用:分隔），系统加载工具ld.so/ld-linux.so将顺序搜索变量指定的目录。例如export $LD_LIBRARY_PATH=/usr/local/lib:$LD_LIBRARY_PATH;
     

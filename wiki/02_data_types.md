@@ -27,6 +27,8 @@
 
 共1张table.
 
+--------------------------------
+
 **TableName**: highway_types.
 
 **作用**: 存储所有道路类型,以及分析中使用到的道路类型.
@@ -40,6 +42,8 @@
 ## 城市边界与城市网格数据table
 
 共2张table.
+
+--------------------------------
 
 **TableName**: bounds.
 
@@ -55,6 +59,7 @@
 | y_max      	| double precision       | 最大纬度		         |
 | grid_size    	| double precision       | 网格边长(in degree) 	 |
 
+--------------------------------
 **TableName**: grids.
 
 **作用**: 存储目标城市的网格.
@@ -71,6 +76,8 @@
 
 共2张table.
 
+--------------------------------
+
 **TableName**: gps_raw.
 
 **作用**: 存储原始GPS数据.
@@ -81,6 +88,8 @@
 | point      	| geometry(Point,4326)	      | GPS坐标点	              |
 | state      	| boolean		              | 是否载客		          |
 | timestamp   	| timestamp without time zone | GPS时间		          |
+
+--------------------------------
 
 **TableName**: gps_filter.
 
@@ -101,6 +110,8 @@
 
 共4张table.
 
+--------------------------------
+
 **TableName**: section_way.
 
 **作用**: 存储section与way对应关系.
@@ -110,6 +121,7 @@
 | section_id    | bigint			          | section标识            |
 | way_id      	| bigint			          | 引用ways表中的id   	  |
 
+--------------------------------
 
 **TableName**: sections.
 
@@ -121,6 +133,7 @@
 | from_node		| bigint			          | 引用nodes表中的id		  |
 | to_node		| bigint			          | 引用nodes表中的id   	  |
 
+--------------------------------
 
 **TableName**: segment_section.
 
@@ -131,6 +144,7 @@
 | segment_id	| bigint			          | segment标识            |
 | section_id	| bigint			          | section标识			  |
 
+--------------------------------
 
 **TableName**: segments.
 
@@ -147,6 +161,8 @@
 
 共2张table.
 
+--------------------------------
+
 **TableName**: trips_od.
 
 **作用**: 存储载客trajectory基本信息.
@@ -160,6 +176,7 @@
 | d_point	    | geometry(Point,4326)        | 终点GPS坐标点   	  	  |
 | d_time     	| timestamp without time zone | 终点时间			  	  |
 
+--------------------------------
 
 **TableName**: trips_od_grid.
 
@@ -174,6 +191,8 @@
 ## Routing数据table
 
 共2张table.
+
+--------------------------------
 
 **TableName**: edges.
 
@@ -201,6 +220,7 @@
 | rule     		| text 						  | 				  	  |
 | isolated     	| integer 					  | 				  	  |
 
+--------------------------------
 
 **TableName**: edges_vertices_pgr.
 
@@ -211,4 +231,5 @@
 使用[create_tables_pg.sql](/sql/init/create_tables_pg.sql)创建数据类型table.
 
 
-# [基本数据导入](/wiki/03_insert_base_data.md)
+# 基本数据导入
+[基本数据导入](/wiki/03_insert_base_data.md)

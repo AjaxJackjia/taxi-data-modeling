@@ -8,10 +8,11 @@ $BODY$
 declare v_record record;
 declare v_pre_state boolean default false;
 declare v_trip_id bigint default 0;
+declare v_seq bigint default 0;
 declare v_pre_id taxi.gps_raw.id%type default '';
 declare	v_cur no scroll cursor for
 		select 
-			id, state, timestamp
+			id, point, state, timestamp
 		from
 			taxi.gps_raw
 		order by
@@ -37,19 +38,28 @@ begin
 		--uncarried to carried
 		if(not v_pre_state and v_record.state) then
 			v_trip_id = v_trip_id + 1;
+			v_seq = 0;
 			v_pre_state = true;
 		end if;
 
-		update 
-			taxi.gps_raw
-		set 
-			trip_id = v_trip_id
-		where
-			current of v_cur
-		;
+		-- Insert data into gps_filter
+		insert into 
+			taxi.gps_filter
+		values (
+			v_record.id,
+			v_record.point,
+			v_record.state,
+			v_record.timestamp,
+			v_trip_id,
+			v_seq,
+			0,
+			0
+		);
+		v_seq = v_seq + 1;
 	end loop;
+	
 	--Delete trips which are too short
-	update taxi.gps_raw
+	update taxi.gps_filter
 	set
 		trip_id = null
 	where
@@ -57,7 +67,7 @@ begin
 			select 
 				trip_id
 			from
-				taxi.gps_raw
+				taxi.gps_filter
 			group by
 				trip_id
 			having

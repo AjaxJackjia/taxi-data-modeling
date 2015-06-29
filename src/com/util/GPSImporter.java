@@ -74,11 +74,14 @@ public class GPSImporter {
 		this.batch_size = batch_size;
 	}
 	
+	//comment: ST_Point(float x_lon, float y_lat);
+	//to_timestamp() convert unix time stamp to postgres timestimp with time zone(computer's local time zone), 
+	//so we should convert it to the time zone of San Franciscom(UTC-8).
 	public void openStatement() {
 		this.insert_into_stmt = DBUtil.getInstance().createSqlStatement(
 				 "INSERT INTO " + 
 				 "	taxi.gps_raw " + 
-				 "VALUES(?, st_setsrid(st_point(?, ?), 4326), ?, to_timestamp(?))");//comment: ST_Point(float x_lon, float y_lat);
+				 "VALUES(?, st_setsrid(st_point(?, ?), 4326), ?, to_timestamp(?) at time zone 'UTC-8')");
 		try {
 			this.insert_into_stmt.getConnection().setAutoCommit(false);
 		} catch (SQLException e) {

@@ -54,7 +54,7 @@ OSM地图数据导入使用Osmosis第三方工具, 主要参考: [http://wiki.op
 
 * 边界数据在创建table的同时导入. 见[创建数据类型table](/sql/init/create_tables_pg.sql).
 
-* 城市网格数据[导入](/sql/procedure/data_generation/generate_grids(double precision, double precision, double precision, double precision, double precision).sql), 其中, procedure最后一个参数代表 grid 的经纬度 gap, 不是用距离km表示的.
+* 城市网格数据[导入](/sql/procedure/data_generation/generate_grids().sql), 其中, procedure最后一个参数代表 grid 的经纬度 gap, 不是用距离km表示的.
 
 
 ## GPS数据导入

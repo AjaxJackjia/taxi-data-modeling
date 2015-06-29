@@ -175,6 +175,7 @@ OSM地图数据table使用osmosis工具中的script文件夹中pgsimple_schema_0
 | o_time	    | timestamp without time zone | 起点时间   	 		  |
 | d_point	    | geometry(Point,4326)        | 终点GPS坐标点   	  	  |
 | d_time     	| timestamp without time zone | 终点时间			  	  |
+| distance     	| double precision			  | 根据GPS估计的距离(单位:米)|
 
 --------------------------------
 

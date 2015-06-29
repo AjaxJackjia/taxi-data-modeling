@@ -82,6 +82,9 @@ CREATE TABLE taxi.gps_filter(
 	segment_id BIGINT,
 	section_id BIGINT
 );
+-- create index over trip id to improve efficiency
+CREATE INDEX ON taxi.gps_filter (trip_id);
+
 
 -- Create tables for city based road data.
 DROP TABLE IF EXISTS taxi.sections;
@@ -120,7 +123,10 @@ CREATE TABLE taxi.trips_od(
 	o_time TIMESTAMP,
 	d_point GEOMETRY(POINT,4326),
 	d_time TIMESTAMP
+	distance DOUBLE PRECISION
 );
+-- create index over id to improve efficiency
+CREATE INDEX ON taxi.trips_od (id);
 
 DROP TABLE IF EXISTS taxi.trips_od_grid;
 CREATE TABLE taxi.trips_od_grid(
@@ -128,6 +134,8 @@ CREATE TABLE taxi.trips_od_grid(
 	o_grid BIGINT,
 	d_grid BIGINT
 );
+-- create index over id to improve efficiency
+CREATE INDEX ON taxi.trips_od_grid (id);
 
 -- Create tables for pgrouting.
 DROP TABLE IF EXISTS taxi.edges;

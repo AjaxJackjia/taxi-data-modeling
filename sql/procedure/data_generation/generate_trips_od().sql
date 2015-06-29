@@ -1,10 +1,8 @@
-﻿-- Function: taxi.generate_trips_od(timestamp without time zone, timestamp without time zone)
+﻿-- Function: taxi.generate_trips_od()
 
--- DROP FUNCTION taxi.generate_trips_od(timestamp without time zone, timestamp without time zone);
+-- DROP FUNCTION taxi.generate_trips_od();
 
-CREATE OR REPLACE FUNCTION taxi.generate_trips_od(
-    v_begin timestamp without time zone,
-    v_end timestamp without time zone DEFAULT now())
+CREATE OR REPLACE FUNCTION taxi.generate_trips_od()
   RETURNS void AS
 $BODY$
 declare v_trip_id bigint;
@@ -22,7 +20,7 @@ declare v_cur no scroll cursor(v_trip_id bigint) for
 	select
 		point
 	from
-		taxi.gps_raw
+		taxi.gps_filter
 	where
 		trip_id = v_trip_id
 	order by
@@ -39,10 +37,9 @@ begin
 		last_value(point) over w d,
 		last_value(timestamp) over w e
 	from
-		taxi.gps_raw
+		taxi.gps_filter
 	where 
-		trip_id is not null and 
-		timestamp between v_begin and v_end
+		trip_id is not null
 	window w as (
 		partition by
 			trip_id
@@ -71,7 +68,7 @@ begin
 		close v_cur;
 		update taxi.trips_od
 		set
-			mileage = v_distance
+			distance = v_distance
 		where
 			current of v_cursor_trips_od
 		;
@@ -82,5 +79,5 @@ end;
 $BODY$
   LANGUAGE plpgsql VOLATILE
   COST 100;
-ALTER FUNCTION taxi.generate_trips_od(timestamp without time zone, timestamp without time zone)
+ALTER FUNCTION taxi.generate_trips_od()
   OWNER TO jgc;

@@ -20,6 +20,9 @@ declare	v_cur no scroll cursor for
 	for update
 ;
 begin
+	-- truncate relative table
+	truncate table taxi.gps_filter;
+	
 	for v_record in v_cur
 	loop
 		if(v_pre_id <> v_record.id) then
@@ -42,7 +45,7 @@ begin
 			v_pre_state = true;
 		end if;
 
-		-- Insert data into gps_filter
+		-- Insert carried data into gps_filter
 		insert into 
 			taxi.gps_filter
 		values (
@@ -59,9 +62,8 @@ begin
 	end loop;
 	
 	--Delete trips which are too short
-	update taxi.gps_filter
-	set
-		trip_id = null
+	delete from
+		taxi.gps_filter
 	where
 		trip_id in (
 			select 

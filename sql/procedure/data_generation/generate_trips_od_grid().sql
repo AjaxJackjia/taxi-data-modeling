@@ -1,9 +1,8 @@
-﻿-- Function: taxi.generate_trips_od_grid(double precision)
+﻿-- Function: taxi.generate_trips_od_grid()
 
--- DROP FUNCTION taxi.generate_trips_od_grid(double precision);
+-- DROP FUNCTION taxi.generate_trips_od_grid();
 
-CREATE OR REPLACE FUNCTION taxi.generate_trips_od_grid(
-	v_delta double precision default 0.002)
+CREATE OR REPLACE FUNCTION taxi.generate_trips_od_grid()
   RETURNS void AS
 $BODY$
 declare v_xmin taxi.bounds.x_min%type;
@@ -18,7 +17,8 @@ declare v_cur no scroll cursor for
 ;
 begin
 	select
-		x_min, y_min, x_max, y_max
+		x_min, y_min,
+		x_max, y_max
 	from
 		taxi.bounds
 	into
@@ -43,13 +43,13 @@ begin
 		insert into taxi.trips_od_grid
 		select
 			v_record.id, 
-			taxi.get_grid(st_x(v_record.o_point), st_y(v_record.o_point), v_delta), 
-			taxi.get_grid(st_x(v_record.d_point), st_y(v_record.d_point), v_delta)
+			taxi.get_grid_id(st_x(v_record.o_point), st_y(v_record.o_point)), 
+			taxi.get_grid_id(st_x(v_record.d_point), st_y(v_record.d_point))
 	;
 	end loop;
 end;
 $BODY$
   LANGUAGE plpgsql VOLATILE
   COST 100;
-ALTER FUNCTION taxi.generate_trips_od_grid(double precision)
+ALTER FUNCTION taxi.generate_trips_od_grid()
   OWNER TO jgc;

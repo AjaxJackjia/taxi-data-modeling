@@ -1,24 +1,24 @@
 package com.main;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileReader;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import com.db.DBUtil;
-import com.util.GPSImporter;
+import com.specific.SF_RecordReader;
+import com.specific.SZ_RecordReader;
 
 public class Main {
 
 	public static void main(String[] args) throws SQLException {
 		Main m = new Main();
-		m.importGPSData();
-	}	
+//		m.import_SF_GPSData();
+		m.import_SZ_GPSData();
+	}
 	
-	//import GPS data
-	public void importGPSData() {
+	//import GPS data for San Francisco
+	public void import_SF_GPSData() {
 		//1. get drivers from file
 		String dir = "/home/jackjia/program/taxi-analysis-relative/data/cabspottingdata/";
 		String driversFileName = dir + "_cabs.txt";
@@ -44,15 +44,42 @@ public class Main {
 			System.out.println("Begin " + driver + " inserting, the " + count + " th dirver.");
 			
 			String datafileName = dir + "new_" + driver + ".txt";
-			try {
-				GPSImporter pgsImporter = new GPSImporter(driver, datafileName);
-				pgsImporter.setBatch_size(750);
-				pgsImporter.startImport();
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
+			SF_RecordReader reader = new SF_RecordReader(driver, datafileName);
+			reader.startRead();
+			
 			System.out.println(driver + " complete inserting!");
 			System.out.println();
 		}
+	}
+	
+	//import GPS data for Shenzhen
+	public void import_SZ_GPSData() {
+		String dir = "/home/jackjia/program/taxi-analysis-relative/data/sz_taxi_data/data/sample-utf8/";
+		File dataDir = new File(dir);
+		File[] driversData = dataDir.listFiles();
+		
+		// import every driver's GPS data
+		int count = 0;
+		long startTime = System.currentTimeMillis();
+		long previousTime = startTime;
+		
+		for(File driverData : driversData) {
+			count++;
+			String fileName = driverData.getName();
+			String driver = fileName.substring(0, fileName.indexOf("."));
+			System.out.println("Begin " + driver + " inserting, the " + count + " th dirver.");
+			
+			
+			String datafileName = dir + fileName;
+			SZ_RecordReader pgsImporter = new SZ_RecordReader(driver, datafileName);
+			pgsImporter.startRead();
+			
+			long currentTime = System.currentTimeMillis();
+			System.out.println(driver + " complete inserting!  Timecost: " + (currentTime - previousTime)/1000 + "s. ");
+			System.out.println();
+			previousTime = currentTime;
+		}
+		
+		System.out.println("Total time cost: " + (System.currentTimeMillis() - startTime)/1000 + "s. ");
 	}
 }

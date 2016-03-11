@@ -88,6 +88,8 @@ OSM地图数据table使用osmosis工具中的script文件夹中pgsimple_schema_0
 | point      	| geometry(Point,4326)	      | GPS坐标点	              |
 | state      	| boolean		              | 是否载客		          |
 | timestamp   	| timestamp without time zone | GPS时间		          |
+| v   	        | double					  | 即时速度(单位为：km/h)   |
+| angle   	    | integer 					  | 行车方向(-1=无；0＝东；1＝东南；2＝南；3＝西南；4＝西；5＝西北；6＝北；7＝东北) |
 
 --------------------------------
 
@@ -101,6 +103,8 @@ OSM地图数据table使用osmosis工具中的script文件夹中pgsimple_schema_0
 | point      	| geometry(Point,4326)	      | GPS坐标点	                |
 | state      	| boolean		              | 是否载客		            |
 | timestamp   	| timestamp without time zone | GPS时间		            |
+| v   	        | double					  | 即时速度(单位为：km/h)     |
+| angle   	    | integer 					  | 行车方向(-1=无；0＝东；1＝东南；2＝南；3＝西南；4＝西；5＝西北；6＝北；7＝东北) |
 | trip_id  		| bigint			          | 司机载客trajectory标识    |
 | seq      		| integer				      | GPS点在trajectory中的次序 |
 | segment_id    | bigint		              | GPS assigned segment    |
@@ -176,6 +180,7 @@ OSM地图数据table使用osmosis工具中的script文件夹中pgsimple_schema_0
 | d_point	    | geometry(Point,4326)        | 终点GPS坐标点   	  	  |
 | d_time     	| timestamp without time zone | 终点时间			  	  |
 | distance     	| double precision			  | 根据GPS估计的距离(单位:米)|
+| v     	    | double precision			  | 根据即时速度估计的平均(单位:km/h)|
 
 --------------------------------
 

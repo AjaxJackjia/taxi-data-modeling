@@ -47,9 +47,12 @@ CREATE TABLE taxi.bounds(
 );
 
 -- Insert data into table bounds.
-INSERT INTO 
-	taxi.bounds
-VALUES(1, 'SF', -122.528, 37.7058, -122.346, 37.8174, 1000.0);
+--INSERT INTO 
+--	taxi.bounds
+--VALUES(1, 'SF', -122.528, 37.7058, -122.346, 37.8174, 1000.0);
+--INSERT INTO 
+--	taxi.bounds
+--VALUES(1, 'SZ', -122.528, 37.7058, -122.346, 37.8174, 1000.0);
 
 -- Create a table for city grids.
 DROP TABLE IF EXISTS taxi.grids;
@@ -68,7 +71,9 @@ CREATE TABLE taxi.gps_raw(
 	id VARCHAR(16),
 	point GEOMETRY(POINT,4326),
 	state BOOLEAN,
-	timestamp TIMESTAMP
+	timestamp TIMESTAMP,
+	v DOUBLE PRECISION,
+	angle INTEGER
 );
 
 DROP TABLE IF EXISTS taxi.gps_filter;
@@ -77,6 +82,8 @@ CREATE TABLE taxi.gps_filter(
 	point GEOMETRY(POINT,4326),
 	state BOOLEAN,
 	timestamp TIMESTAMP,
+	v DOUBLE PRECISION,
+	angle INTEGER,
 	trip_id BIGINT,
 	seq INTEGER,
 	segment_id BIGINT,
@@ -122,8 +129,9 @@ CREATE TABLE taxi.trips_od(
 	o_point GEOMETRY(POINT,4326),
 	o_time TIMESTAMP,
 	d_point GEOMETRY(POINT,4326),
-	d_time TIMESTAMP
-	distance DOUBLE PRECISION
+	d_time TIMESTAMP,
+	distance DOUBLE PRECISION,
+	v DOUBLE PRECISION
 );
 -- create index over id to improve efficiency
 CREATE INDEX ON taxi.trips_od (id);

@@ -1,9 +1,9 @@
-package com.specific;
+package com.gps.specific;
 
 import java.text.ParseException;
 
-import com.util.RecordReader;
-import com.util.TaxiRecord;
+import com.gps.util.RecordReader;
+import com.gps.util.TaxiRecord;
 
 public class SF_RecordReader extends RecordReader {
 	

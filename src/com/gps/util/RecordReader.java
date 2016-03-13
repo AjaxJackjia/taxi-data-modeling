@@ -1,4 +1,4 @@
-package com.util;
+package com.gps.util;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;

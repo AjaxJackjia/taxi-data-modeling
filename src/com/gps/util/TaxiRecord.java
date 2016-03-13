@@ -1,4 +1,4 @@
-package com.util;
+package com.gps.util;
 
 public class TaxiRecord {
 	private String id;

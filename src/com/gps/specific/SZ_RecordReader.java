@@ -1,12 +1,12 @@
-package com.specific;
+package com.gps.specific;
 
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import com.util.RecordReader;
-import com.util.TaxiRecord;
+import com.gps.util.RecordReader;
+import com.gps.util.TaxiRecord;
 
 public class SZ_RecordReader extends RecordReader {
 	

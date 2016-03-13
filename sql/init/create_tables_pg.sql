@@ -50,9 +50,10 @@ CREATE TABLE taxi.bounds(
 --INSERT INTO 
 --	taxi.bounds
 --VALUES(1, 'SF', -122.528, 37.7058, -122.346, 37.8174, 1000.0);
---INSERT INTO 
---	taxi.bounds
---VALUES(1, 'SZ', -122.528, 37.7058, -122.346, 37.8174, 1000.0);
+
+INSERT INTO 
+	taxi.bounds
+VALUES(1, 'SZ', 113.7672, 22.4459, 114.2856, 22.6796, 1000.0);
 
 -- Create a table for city grids.
 DROP TABLE IF EXISTS taxi.grids;

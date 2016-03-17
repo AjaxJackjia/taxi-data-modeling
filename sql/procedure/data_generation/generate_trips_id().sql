@@ -12,7 +12,7 @@ declare v_seq bigint default 0;
 declare v_pre_id taxi.gps_raw.id%type default '';
 declare	v_cur no scroll cursor for
 		select 
-			id, point, state, timestamp
+			id, point, state, timestamp, v, angle
 		from
 			taxi.gps_raw
 		order by
@@ -53,6 +53,8 @@ begin
 			v_record.point,
 			v_record.state,
 			v_record.timestamp,
+			v_record.v,
+			v_record.angle,
 			v_trip_id,
 			v_seq,
 			0,

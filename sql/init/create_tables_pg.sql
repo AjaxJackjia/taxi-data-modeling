@@ -42,7 +42,7 @@ CREATE TABLE taxi.bounds(
 	y_min DOUBLE PRECISION,
 	x_max DOUBLE PRECISION,
 	y_max DOUBLE PRECISION,
-	grid_size DOUBLE PRECISION, -- in km
+	grid_size DOUBLE PRECISION, -- latitude step gap
 	CONSTRAINT bounds_pkey PRIMARY KEY (id)
 );
 
@@ -53,7 +53,9 @@ CREATE TABLE taxi.bounds(
 
 INSERT INTO 
 	taxi.bounds
-VALUES(1, 'SZ', 113.7672, 22.4459, 114.2856, 22.6796, 1000.0);
+VALUES(1, 'SZ', 113.767, 22.445, 114.285, 22.679, 0.00585);
+-- suppose that split the lat range into 40 pieces, then every piece is 0.00585
+-- then the grid is 0.00585 * 0.00585, almost 0.64935km * 0.64935km(approximate)
 
 -- Create a table for city grids.
 DROP TABLE IF EXISTS taxi.grids;

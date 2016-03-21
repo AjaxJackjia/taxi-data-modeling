@@ -3,38 +3,31 @@
 -- DROP FUNCTION taxi.get_node(bigint);
 
 CREATE OR REPLACE FUNCTION taxi.get_node(v_node_id bigint)
-  RETURNS SETOF refcursor AS
+  RETURNS TABLE (
+	id bigint,
+	lng double precision,
+	lat double precision,
+	way_id bigint
+  ) AS
 $BODY$
-declare 
-	r_node_pos refcursor;
-	r_node_tags refcursor;
 begin
-	open r_node_pos for
-	select
-		st_x(geom) longitude,
-		st_y(geom) latitude
-	from
-		nodes
-	where
-		id = v_node_id
+	return query 
+		select
+			T1.id,
+			st_x(T1.geom) lng,
+			st_y(T1.geom) lat,
+			T2.way_id
+		from
+			nodes T1,
+			way_nodes T2 
+		where
+			T1.id = v_node_id and
+			T2.node_id = v_node_id
 	;
-	return next r_node_pos;
-	
-	open r_node_tags for
-	select 
-		(each(tags)).key,
-		(each(tags)).value		
-	from
-		nodes
-	where
-		id = v_node_id
-	;
-	return next r_node_tags;
-	
-	
-end;$BODY$
+	return;
+end;
+$BODY$
   LANGUAGE plpgsql IMMUTABLE
-  COST 100
-  ROWS 1000;
+  COST 100;
 ALTER FUNCTION taxi.get_node(bigint)
   OWNER TO jgc;

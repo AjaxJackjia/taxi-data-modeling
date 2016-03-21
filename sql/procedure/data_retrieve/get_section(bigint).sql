@@ -9,22 +9,28 @@ declare result refcursor;
 begin
 	open result for
 	select
-		st_x(T2.geom) from_lng, st_y(T2.geom) from_lat,
-		st_x(T3.geom) to_lng, st_y(T3.geom) to_lat,
-		T5.id way_id, 
-		T5.tags->'name' way_name
+		st_x(T4.geom) from_lng, st_y(T4.geom) from_lat,
+		st_x(T5.geom) to_lng, st_y(T5.geom) to_lat,
+		T1.id section_id,
+		T2.id segment_id,
+		T7.id way_id, 
+		T7.tags->'name' way_name
 	from
 		taxi.sections T1,
-		nodes T2,
-		nodes T3,
-		taxi.section_way T4,
-		ways T5
+		taxi.segments T2,
+		taxi.segment_section T3,
+		nodes T4,
+		nodes T5,
+		taxi.section_way T6,
+		ways T7
 	where
 		T1.id = v_id and
-		T1.from_node = t2.id and
-		T1.to_node = t3.id and
-		T1.id = T4.section_id and
-		T4.way_id = t5.id
+		T1.id = T3.section_id and
+		T2.id = T3.segment_id and
+		T1.from_node = T4.id and
+		T1.to_node = T5.id and
+		T1.id = T6.section_id and
+		T6.way_id = T7.id
 	;
 
 	return result;
@@ -34,4 +40,3 @@ $BODY$
   COST 100;
 ALTER FUNCTION taxi.get_section(bigint)
   OWNER TO jgc;
- --select taxi.get_section(0)
